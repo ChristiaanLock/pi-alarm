@@ -1,0 +1,22 @@
+from tkinter import *
+root = Tk()
+def buttonclick():
+    wachtwoord=entry.get()
+    print(wachtwoord)
+    snel=snelheid.get()
+    print(snel)
+label = Label(master=root,text='Voer uw login in')
+label.pack()
+label = Label(master=root, text='Voer het wachtwoord in', height=2)
+label.pack()
+entry = Entry(master=root)
+entry.pack()
+label=Label(master=root,text='Snelheid')
+label.pack()
+snelheid = Scale(master=root, from_=0, to=10,orient=HORIZONTAL)
+snelheid.pack()
+button=Button(master=root,text='Voer in',command=buttonclick)
+button.pack()
+while True:
+        root.update_idletasks()
+        root.update()
