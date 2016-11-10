@@ -18,6 +18,11 @@ tg = Telegram()
 tguser = '6435514'
 
 def buttonclick():
+    """
+    haalt het ww op en checkt of het goed is als het goed
+    is wordt er een bericht gestuurd via telegram en worden
+    de widgets weggehaald en nieuw widgets ingeladen
+    """
     global flash
     wachtwoord=w['pw'].get()
 
@@ -38,11 +43,15 @@ def buttonclick():
     else:
         messagebox.showinfo("Wachtwoord Incorrect","Probeer het nog een keertje :)")
 def checkTrigger():
+    """
+    Checkt of de knop gedrukt is en activeert het knipperende alarm
+    """
     global flash
     if GPIO.input(11) == 1:
         flash = True
         tg.sendMessage("Alarm geactiveerd!", tguser)
 def checkDeactivate():
+    """als de andere knop geklikt wordt terwijl het alarm aan staat(flash == True)"""
     global flash
     global w
     if GPIO.input(7) == 1 and flash == True:
@@ -54,6 +63,7 @@ def checkDeactivate():
 
         w['button'].pack()
 def flashLed():
+    """dit is wat er gebeurt wanneer het lampje knippert"""
     global flash
     if flash == True:
         GPIO.output(13, True)
@@ -63,20 +73,27 @@ def flashLed():
 
 
 def setSpeed():
+    """zo wordt de snelheid van het knippere ingesteld
+    de widgets om de instellingen te verkrijgen worden ingeladen
+    en ze worden global gemaakt
+    """
     global speed
     speed = w['speedScale'].get()
 
     w['speedScale'].pack_forget()
     w['speed'].pack_forget()
     w['speedbutton'].pack_forget()
-    
+
 def main():
+    	"""dit het programma zelf als het ware deze functies worden continue gecontroleerd"""
     checkTrigger()
     checkDeactivate()
     flashLed()
-    
-    
 
+
+"""
+alle widgets die ingeladen kunnen worden worden hier gemaakt
+"""
 w['enterPw'] = Label(master=root, text='Voer het wachtwoord in', height=2)
 
 w['pw'] = Entry(master=root, show="*")
@@ -89,6 +106,7 @@ w['button']=Button(master=root,text='Voer in',command=buttonclick)
 
 w['speedbutton']=Button(master=root,text='Stel in',command=setSpeed)
 while True:
+    """de mainloop van tkinter"""
         root.update_idletasks()
         root.update()
         main()
